@@ -13,17 +13,6 @@ const item2 = {
 }
 
 
-const item3 = {
-  id: v4(),
-  name: "Clean the bus"
-}
-
-const item4 = {
-  id: v4(),
-  name: "Wash the cloth"
-}
-
-
 function App() {
   const [text, setText] = useState("");
   const [todoState, setTodoState] = useState({
@@ -37,7 +26,7 @@ function App() {
     },
     "done": {
       title: "Completed",
-      items: [item3]
+      items: []
     }
   })
   // const [todo, setTodo] = useState([]);
@@ -85,13 +74,9 @@ function App() {
       prevState[sourceStatus].items.splice(taskIndex, 1);
       prevState[destStatus].items.splice(prevState[destStatus].items.length, 0, task);
       // console.log(prevState);
-      
       return prevState;
     })
-    
   }
-
-
   return (
     <div className="App">
       <div className="todo-form">
@@ -101,59 +86,47 @@ function App() {
       <div className="todos">
         <div className="task-container"
           onDragOver={(e) => onDragOver(e)}
-          onDrop = {(e) => onDrop(e, "todo")}
-        >
+          onDrop = {(e) => onDrop(e, "todo")}>
           {
           todoState.todo.items.map((item,key) => {
             return (
               <div  key={key}
-                onDragStart = {(e) => onDragStart(e, key, item, "todo")}
-                draggable
-                className="draggable"
-              >
-                {item.name}</div>
-          ) 
+                onDragStart = {(e) => onDragStart(e, key, item, "todo")} draggable className="draggable">
+                    {item.name}
+              </div>
+            ) 
           })
         }
         </div>
         <div className="droppable in-progress" 
           onDragOver={(e) => onDragOver(e)}
-          onDrop = {(e) => onDrop(e, "doing")}
-          >
+          onDrop = {(e) => onDrop(e, "doing")}>
           {
             todoState.doing.items.map((item,key) => {
               return (
-                <div   key={key}
-                  onDragStart = {(e) => onDragStart(e, key, item, "doing")}
-                  draggable
-                  className="draggable"
-                >
-                  {item.name}
+                <div key={key}
+                  onDragStart = {(e) => onDragStart(e, key, item, "doing")} draggable className="draggable">
+                      {item.name}
                 </div>
-            )
+              )
           })
           }
         </div>
         <div className="droppable done" 
           onDragOver={(e) => onDragOver(e)}
-          onDrop = {(e) => onDrop(e, "done")}
-          >
+          onDrop = {(e) => onDrop(e, "done")}>
           {
             todoState.done.items.map((item,key) => {
               return (
-                <div   key={key}
-                  onDragStart = {(e) => onDragStart(e, key, item, "done")}
-                  draggable
-                  className="draggable"
-                >
-                  {item.name}
+                <div key={key}
+                  onDragStart = {(e) => onDragStart(e, key, item, "done")} draggable className="draggable">
+                      {item.name}
                 </div>
-            )
-          })
+              )
+            })
           }
         </div>
       </div>
-      
     </div>
   );
 }
