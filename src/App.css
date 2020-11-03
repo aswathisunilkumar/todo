@@ -1,5 +1,31 @@
+* {
+  box-sizing: border-box;
+}
+
 .App {
+  padding: 10px;
   text-align: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.header {
+  font: outline;
+  font-size: 40px;
+  padding: 20px;
+  font-weight: bold;
+}
+
+.input-container {
+  margin-bottom: 10px;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 10px;
+  width: 30%;
+  height: 100%;
 }
 
 .todos {
@@ -9,22 +35,78 @@
   margin-top:20px;
 }
 
+
 .task-container{
-  background-color: #f1f1f1;
+  background-color:rgba(87,190,133,1);
   padding: 10px;
+  position: relative;
 }
 
+.faicons {
+  position: absolute;
+  right: 20px;
+  cursor: pointer;
+  padding: 1px;
+}
+
+.faicons :hover {
+  color: red;
+} 
+
 .in-progress {
-  background-color: aquamarine;
+  background-color:rgba(123,206,215,1);
   padding: 10px;
+  position: relative;
 }
 
 .done {
-  background-color: rgb(255, 200, 127);
+  background-color:rgba(216,117,117,1);
   padding: 10px;
+  position: relative;
 }
 
 .draggable {
+  margin-bottom: 10px;
+  background-color: gray;
+  color: white;
   border: 1px solid black;
-  margin: 5px;
+  padding: 5px;
+  border-radius: 7px;
+}
+
+.button-class {
+  display: inline-block;
+  background-color:rgba(142,12,36,1);
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 15px;
+  padding: 10px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+.button-class span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button-class span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button-class:hover span {
+  padding-right: 25px;
+}
+
+.button-class:hover span:after {
+  opacity: 1;
+  right: 0;
 }

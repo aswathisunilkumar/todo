@@ -1,38 +1,32 @@
 import './App.css';
 import { useState } from 'react';
 import {v4} from 'uuid';
-
-const item = {
-  id: v4(),
-  name: "Clean the house"
-}
-
-const item2 = {
-  id: v4(),
-  name: "Wash the car"
-}
-
+import TaskItem from './components/TaskItem';
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {faTrash} from '@fortawesome/free-solid-svg-icons';
+library.add(faTrash);
 
 function App() {
   const [text, setText] = useState("");
   const [todoState, setTodoState] = useState({
     "todo": {
       title: "Todo",
-      items: [item]
+      items: []
     },
     "doing": {
       title: "In Progress",
-      items: [item2]
+      items: []
     },
     "done": {
       title: "Completed",
       items: []
     }
   })
-  // const [todo, setTodo] = useState([]);
-  // const [doing, setDoing] = useState([]);
 
   const addTodo = () => {
+    if(text==="") {
+      return;
+    }
     setTodoState(prev => {
       return {
         ...prev,
@@ -58,73 +52,72 @@ function App() {
   }
 
   const onDragStart = (e, key, item, status) => {
-    e.dataTransfer.setData("id", key);
     e.dataTransfer.setData("task",JSON.stringify(item));
     e.dataTransfer.setData("status",status);
   }
 
-  
   const onDrop = (e, destStatus) => {
-    let taskIndex= e.dataTransfer.getData("id");
-    // let task = JSON.parse(e.dataTransfer.getData("task"));
+    let task = JSON.parse(e.dataTransfer.getData("task"));
     let sourceStatus = e.dataTransfer.getData("status");
-    const task = {...todoState[sourceStatus].items[taskIndex]};
-    setTodoState(prevState =>{
-      prevState = {...prevState};
-      prevState[sourceStatus].items.splice(taskIndex, 1);
-      prevState[destStatus].items.splice(prevState[destStatus].items.length, 0, task);
-      // console.log(prevState);
-      return prevState;
-    })
+    if (destStatus === sourceStatus) {
+      return;
+    }
+    const remainingTask = todoState[sourceStatus].items.filter((eachTask)=>eachTask.id!==task.id)
+    setTodoState(prev => ({
+        ...prev,
+        [sourceStatus] : {
+          items :[...remainingTask],
+        },
+        [destStatus] : {
+          items :  [...prev[destStatus].items, task]
+        }
+      }))
+  }
+  const deleteItem =(item,status) => {
+    const remainingItems=todoState[status].items.filter((eachItem)=>eachItem.id!==item.id)
+    setTodoState(prev => (
+      {
+        ...prev,
+        [status] : {
+          items :[...remainingItems]
+        } 
+      }
+    ))
   }
   return (
     <div className="App">
+      <div className="header">YOUR TODOS</div>
       <div className="todo-form">
-        <input type="text" value={text} onChange={(e)=> setText(e.target.value)}/>
-        <button onClick={addTodo}>Add Todo</button>
+        <input className="input-container" placeholder="Add your todo here" type="text" value={text} onChange={(e)=> setText(e.target.value)} />
+        <button className="button-class" onClick={addTodo}><span>Add Todo</span></button>
       </div>
       <div className="todos">
         <div className="task-container"
           onDragOver={(e) => onDragOver(e)}
           onDrop = {(e) => onDrop(e, "todo")}>
+          <h2>TO-DO LIST</h2>
           {
-          todoState.todo.items.map((item,key) => {
+          todoState.todo.items.map((item,id) => {
             return (
-              <div  key={key}
-                onDragStart = {(e) => onDragStart(e, key, item, "todo")} draggable className="draggable">
-                    {item.name}
-              </div>
-            ) 
-          })
-        }
+              <TaskItem key={id} onDragStart={onDragStart} status="todo" deleteItem={deleteItem} item={item}/>)})}
         </div>
         <div className="droppable in-progress" 
           onDragOver={(e) => onDragOver(e)}
           onDrop = {(e) => onDrop(e, "doing")}>
+          <h2>DOING LIST</h2>
           {
-            todoState.doing.items.map((item,key) => {
+            todoState.doing.items.map((item,id) => {
               return (
-                <div key={key}
-                  onDragStart = {(e) => onDragStart(e, key, item, "doing")} draggable className="draggable">
-                      {item.name}
-                </div>
-              )
-          })
-          }
+                <TaskItem key={id} onDragStart={onDragStart} status="doing" deleteItem={deleteItem} item={item}/>)})}
         </div>
         <div className="droppable done" 
           onDragOver={(e) => onDragOver(e)}
           onDrop = {(e) => onDrop(e, "done")}>
+           <h2>DONE LIST</h2>
           {
-            todoState.done.items.map((item,key) => {
+            todoState.done.items.map((item,id) => {
               return (
-                <div key={key}
-                  onDragStart = {(e) => onDragStart(e, key, item, "done")} draggable className="draggable">
-                      {item.name}
-                </div>
-              )
-            })
-          }
+                <TaskItem key={id} onDragStart={onDragStart} status="done" deleteItem={deleteItem} item={item}/>)})}
         </div>
       </div>
     </div>
