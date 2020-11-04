@@ -10,7 +10,8 @@
 }
 
 .header {
-  font: outline;
+  display: flex;
+  justify-content: center;
   font-size: 40px;
   padding: 20px;
   font-weight: bold;
