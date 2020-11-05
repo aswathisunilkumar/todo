@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .App {
@@ -21,7 +22,7 @@
   margin-bottom: 10px;
   background-color: white;
   color: black;
-  border: 1px solid black;
+  border: 2px solid black;
   padding: 10px;
   font-size: 15px;
   border-radius: 10px;
@@ -33,52 +34,64 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 10px;
-  margin-top:20px;
+  margin-top: 20px;
+  padding: 20px;
 }
 
 
-.task-container{
-  background-color:rgba(87,190,133,1);
-  padding: 10px;
+.task-container,.in-progress,.done {
+  display: flex;
+  flex-direction: column;
   position: relative;
+  box-shadow: 10px 10px 5px #d6d4d4;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  
 }
-
 .faicons {
-  position: absolute;
-  right: 20px;
   cursor: pointer;
-  padding: 1px;
+  margin-left: 50px;
 }
 
 .faicons :hover {
   color: red;
-} 
-
-.in-progress {
-  background-color:rgba(123,206,215,1);
-  padding: 10px;
-  position: relative;
 }
 
-.done {
-  background-color:rgba(216,117,117,1);
-  padding: 10px;
-  position: relative;
+.title-todo, .title-done, .title-doing{
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.title-todo {
+  background-color: #5b8df4;
+}
+.title-doing {
+  background-color: #f8942d;
+}
+
+.title-done {
+  background-color: #74be7e;
 }
 
 .draggable {
-  margin-bottom: 10px;
-  background-color: gray;
-  color: white;
-  border: 1px solid black;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  align-content: center;
+  margin: 10px;
+  text-align: left;
+  color: rgb(2, 2, 2);
+  height: 50px;
+  align-items: center;
   padding: 5px;
-  border-radius: 7px;
+  border-radius: 5px;
+  cursor: pointer;
+  
 }
 
 .button-class {
   display: inline-block;
-  background-color:rgba(142,12,36,1);
-  color: #FFFFFF;
+  background-color: rgba(142, 12, 36, 1);
+  color: #ffffff;
   text-align: center;
   font-size: 15px;
   padding: 10px;
@@ -95,7 +108,7 @@
 }
 
 .button-class span:after {
-  content: '\00bb';
+  content: "\00bb";
   position: absolute;
   opacity: 0;
   top: 0;

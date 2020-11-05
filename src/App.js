@@ -92,10 +92,10 @@ function App() {
         <button className="button-class" onClick={addTodo}><span>Add Todo</span></button>
       </div>
       <div className="todos">
-        <div className="task-container"
+        <div className="task-container" 
           onDragOver={(e) => onDragOver(e)}
           onDrop = {(e) => onDrop(e, "todo")}>
-          <h2>TO-DO LIST</h2>
+          <div className="title-todo"><h2>TO-DO LIST</h2></div>
           {
           todoState.todo.items.map((item,id) => {
             return (
@@ -104,7 +104,7 @@ function App() {
         <div className="droppable in-progress" 
           onDragOver={(e) => onDragOver(e)}
           onDrop = {(e) => onDrop(e, "doing")}>
-          <h2>DOING LIST</h2>
+          <div className="title-doing"><h2>DOING LIST</h2></div>
           {
             todoState.doing.items.map((item,id) => {
               return (
@@ -113,7 +113,7 @@ function App() {
         <div className="droppable done" 
           onDragOver={(e) => onDragOver(e)}
           onDrop = {(e) => onDrop(e, "done")}>
-           <h2>DONE LIST</h2>
+           <div className="title-done"><h2>DONE LIST</h2></div>
           {
             todoState.done.items.map((item,id) => {
               return (
